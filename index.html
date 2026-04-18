@@ -92,11 +92,17 @@
             -webkit-text-fill-color: transparent;
         }
     </style>
-<style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
+  
+  <!-- 3D & Animation Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
   </head>
 <body class="font-body text-on-surface">
 <!-- Shared Component: TopAppBar -->
@@ -132,8 +138,8 @@
 </div>
 </div>
 </div>
-<!-- Background Decoration -->
-<div class="absolute -right-20 top-1/4 w-96 h-96 bg-primary-container/5 rounded-full blur-[120px] -z-10"></div>
+<!-- Background Decoration (Replaced with Three.js Canvas Container) -->
+<div id="canvas-container" class="absolute inset-0 -z-10 mix-blend-screen opacity-50"></div>
 </section>
 <!-- Bio Section -->
 <section class="py-32 px-8 md:px-20 lg:px-32 bg-surface-container-low" id="about">
@@ -204,32 +210,32 @@
 <h2 class="font-headline text-5xl text-white mt-4">The Toolset</h2>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-<div class="glass-card p-10 rounded-xl neon-glow transition-all duration-300 hover:bg-surface-container-high group">
+<div class="glass-card p-10 rounded-xl neon-glow transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
 <span class="material-symbols-outlined text-primary-container mb-6 text-4xl">palette</span>
 <h3 class="font-headline text-2xl text-white mb-2">Canva</h3>
 <p class="text-on-surface-variant text-sm">Visual storytelling and graphic asset creation for multi-channel digital campaigns.</p>
 </div>
-<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group">
+<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
 <span class="material-symbols-outlined text-primary-container mb-6 text-4xl">strategy</span>
 <h3 class="font-headline text-2xl text-white mb-2">Content Strategy</h3>
 <p class="text-on-surface-variant text-sm">End-to-end planning from audience persona development to editorial calendars.</p>
 </div>
-<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group">
+<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
 <span class="material-symbols-outlined text-primary-container mb-6 text-4xl">trending_up</span>
 <h3 class="font-headline text-2xl text-white mb-2">Digital Marketing</h3>
 <p class="text-on-surface-variant text-sm">Data-driven marketing tactics focused on engagement, reach, and conversion.</p>
 </div>
-<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group">
+<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
 <span class="material-symbols-outlined text-primary-container mb-6 text-4xl">public</span>
 <h3 class="font-headline text-2xl text-white mb-2">Public Relations</h3>
 <p class="text-on-surface-variant text-sm">Brand voice management and strategic media relations for professional entities.</p>
 </div>
-<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group">
+<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
 <span class="material-symbols-outlined text-primary-container mb-6 text-4xl">assignment</span>
 <h3 class="font-headline text-2xl text-white mb-2">News Input</h3>
 <p class="text-on-surface-variant text-sm">Information gathering, news verification, and editorial assignment management.</p>
 </div>
-<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group">
+<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
 <span class="material-symbols-outlined text-primary-container mb-6 text-4xl">school</span>
 <h3 class="font-headline text-2xl text-white mb-2">Education</h3>
 <p class="text-on-surface-variant text-sm">Postgrad in Journalism and Mass Communication from Utkal University.</p>
@@ -265,5 +271,211 @@
                 © 2024 SUSMITA BAL — ALL RIGHTS RESERVED
             </div>
 </div>
+</div>
+</footer>
+
+<!-- Gemini AI Chat Widget -->
+<div id="ai-chat-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <!-- Chat Window -->
+    <div id="ai-chat-window" class="hidden w-80 md:w-96 glass-card rounded-2xl mb-4 overflow-hidden border border-primary/20 shadow-2xl flex-col transition-all duration-300 origin-bottom-right">
+        <!-- Header -->
+        <div class="bg-surface-container-high p-4 flex justify-between items-center border-b border-primary/10">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-xl">temp_preferences_custom</span>
+                <span class="font-headline text-white">Susmita AI</span>
+            </div>
+            <button id="ai-chat-close" class="text-on-surface-variant hover:text-white transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <!-- Messages -->
+        <div id="ai-chat-messages" class="h-80 p-4 font-body text-sm space-y-4 overflow-y-auto flex flex-col bg-surface/50">
+            <div class="bg-surface-container p-3 rounded-xl rounded-tl-sm self-start max-w-[85%] text-on-surface">
+                Hi! I'm Susmita's AI assistant. Do you have any questions about her journalism experience, content strategies, or portfolio?
+            </div>
+        </div>
+        <!-- Input -->
+        <div class="p-3 bg-surface-container-high border-t border-primary/10 flex gap-2">
+            <input id="ai-chat-input" type="text" placeholder="Ask a question..." class="w-full bg-surface-container rounded-lg px-3 py-2 text-white text-sm outline-none border border-outline-variant/30 focus:border-primary/50 transition-colors" />
+            <button id="ai-chat-send" class="bg-primary-container text-on-primary-fixed p-2 rounded-lg hover:bg-primary transition-colors flex items-center justify-center">
+                <span class="material-symbols-outlined text-sm">send</span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Chat Toggle Button -->
+    <button id="ai-chat-toggle" class="w-14 h-14 rounded-full bg-primary-container text-on-primary-fixed shadow-lg neon-glow hover:scale-105 transition-transform flex items-center justify-center relative group">
+        <span class="material-symbols-outlined text-2xl group-hover:hidden">auto_awesome</span>
+        <span class="material-symbols-outlined text-2xl hidden group-hover:block">chat</span>
+        <span id="ai-chat-badge" class="absolute top-0 right-0 w-3 h-3 bg-error rounded-full border-2 border-[#0B0E14] animate-pulse"></span>
+    </button>
+</div>
+
+<!-- Scripts for 3D Effects & AI Widget -->
+<script>
+// --- 1. Three.js Hero Background ---
+const initThreeJS = () => {
+    const container = document.getElementById('canvas-container');
+    if (!container) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    // Create particle stars
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 700;
+    const posArray = new Float32Array(particlesCount * 3);
+
+    for(let i = 0; i < particlesCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 5;
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const material = new THREE.PointsMaterial({
+        size: 0.005,
+        color: 0x00D4FF,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending
+    });
+
+    const particlesMesh = new THREE.Points(particlesGeometry, material);
+    scene.add(particlesMesh);
+    camera.position.z = 2;
+
+    let mouseX = 0;
+    let mouseY = 0;
+    document.addEventListener('mousemove', (event) => {
+        mouseX = event.clientX / window.innerWidth - 0.5;
+        mouseY = event.clientY / window.innerHeight - 0.5;
+    });
+
+    const animate = () => {
+        requestAnimationFrame(animate);
+        particlesMesh.rotation.y += 0.001;
+        particlesMesh.rotation.x += 0.0005;
+        
+        // Slight interaction with mouse
+        particlesMesh.rotation.y += mouseX * 0.05;
+        particlesMesh.rotation.x += mouseY * 0.05;
+        
+        renderer.render(scene, camera);
+    };
+
+    animate();
+
+    // Handle Resize
+    window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+};
+
+// --- 2. GSAP ScrollTrigger Entrances ---
+const initGSAP = () => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Sections fade up
+    const sections = ['#about', '#experience', '#skills'];
+    sections.forEach(selector => {
+        gsap.from(selector, {
+            scrollTrigger: {
+                trigger: selector,
+                start: "top 80%",
+                toggleActions: "play none none reverse"
+            },
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out"
+        });
+    });
+
+    // Timeline items staggered animation
+    gsap.from("#experience .group", {
+        scrollTrigger: {
+            trigger: "#experience",
+            start: "top 70%",
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power2.out"
+    });
+};
+
+// --- 3. AI Chat Widget Logic ---
+const initChatWidget = () => {
+    const toggleBtn = document.getElementById('ai-chat-toggle');
+    const closeBtn = document.getElementById('ai-chat-close');
+    const windowEl = document.getElementById('ai-chat-window');
+    const badge = document.getElementById('ai-chat-badge');
+    const inputEl = document.getElementById('ai-chat-input');
+    const sendBtn = document.getElementById('ai-chat-send');
+    const messagesEl = document.getElementById('ai-chat-messages');
+
+    const toggleChat = () => {
+        windowEl.classList.toggle('hidden');
+        windowEl.classList.toggle('flex');
+        if (badge) badge.style.display = 'none'; // hide notification badge
+    };
+
+    toggleBtn.addEventListener('click', toggleChat);
+    closeBtn.addEventListener('click', toggleChat);
+
+    const appendMessage = (text, isUser = false) => {
+        const div = document.createElement('div');
+        div.className = `p-3 rounded-xl max-w-[85%] text-sm text-on-surface ${
+            isUser ? 'bg-primary-container text-on-primary-fixed rounded-tr-sm self-end' : 'bg-surface-container rounded-tl-sm self-start'
+        }`;
+        div.textContent = text;
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    };
+
+    const handleSend = async () => {
+        const text = inputEl.value.trim();
+        if(!text) return;
+        
+        appendMessage(text, true);
+        inputEl.value = '';
+
+        // Add typing indicator
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'bg-surface-container p-3 rounded-xl rounded-tl-sm self-start max-w-[85%] text-on-surface-variant text-xs italic';
+        typingDiv.textContent = 'Susmita AI is typing...';
+        messagesEl.appendChild(typingDiv);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+
+        // Mock AI Response Delay
+        setTimeout(() => {
+            messagesEl.removeChild(typingDiv);
+            
+            // Hardcoded mock response for safety instead of a direct API call
+            const reply = "That's a great question! Susmita brings over 4 years of experience analyzing news flows and crafting narratives that drive engagement. Is there a specific project or skillset you'd like to hear more about?";
+            
+            appendMessage(reply, false);
+        }, 1500);
+    };
+
+    sendBtn.addEventListener('click', handleSend);
+    inputEl.addEventListener('keypress', (e) => {
+        if(e.key === 'Enter') handleSend();
+    });
+};
+
+// Initialize everything on load
+window.addEventListener('DOMContentLoaded', () => {
+    initThreeJS();
+    initGSAP();
+    initChatWidget();
+});
+</script>
 </footer>
 </body></html>
