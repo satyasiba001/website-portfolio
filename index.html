@@ -1,481 +1,514 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Susmita Bal | Digital Storyteller</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300,0&display=swap" rel="stylesheet"/>
+    
+    <!-- 3D & Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
         tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "on-tertiary-fixed": "#1b1c1c",
-                      "primary-fixed-dim": "#3cd7ff",
-                      "outline": "#859398",
-                      "on-tertiary-fixed-variant": "#464747",
-                      "surface-bright": "#363940",
-                      "surface-container-highest": "#32353c",
-                      "surface": "#10131a",
-                      "secondary-container": "#454747",
-                      "inverse-on-surface": "#2e3037",
-                      "tertiary-container": "#c3c2c2",
-                      "primary-fixed": "#b4ebff",
-                      "secondary-fixed": "#e2e2e2",
-                      "on-error-container": "#ffdad6",
-                      "on-primary-fixed": "#001f27",
-                      "surface-variant": "#32353c",
-                      "secondary": "#c6c6c6",
-                      "on-surface-variant": "#bbc9cf",
-                      "on-primary-fixed-variant": "#004e5f",
-                      "background": "#10131a",
-                      "surface-container-high": "#272a31",
-                      "surface-container-low": "#191c22",
-                      "on-secondary-container": "#b5b5b5",
-                      "surface-dim": "#10131a",
-                      "on-primary": "#003642",
-                      "on-error": "#690005",
-                      "on-surface": "#e1e2eb",
-                      "error": "#ffb4ab",
-                      "primary-container": "#00d4ff",
-                      "surface-tint": "#3cd7ff",
-                      "surface-container-lowest": "#0b0e14",
-                      "tertiary-fixed-dim": "#c7c6c6",
-                      "primary": "#a8e8ff",
-                      "inverse-surface": "#e1e2eb",
-                      "secondary-fixed-dim": "#c6c6c6",
-                      "on-secondary-fixed-variant": "#454747",
-                      "error-container": "#93000a",
-                      "tertiary": "#dfdede",
-                      "surface-container": "#1d2026",
-                      "on-primary-container": "#00586b",
-                      "on-tertiary-container": "#4f5050",
-                      "on-secondary-fixed": "#1a1c1c",
-                      "outline-variant": "#3c494e",
-                      "tertiary-fixed": "#e4e2e2",
-                      "on-background": "#e1e2eb",
-                      "on-tertiary": "#303031",
-                      "on-secondary": "#2f3131",
-                      "inverse-primary": "#00677e"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "fontFamily": {
-                      "headline": ["Newsreader"],
-                      "body": ["Inter"],
-                      "label": ["Inter"]
-              }
-            },
-          },
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#040711', // Deep space dark blue
+                        surface: '#0B1120',
+                        primary: '#9DE0FF', // Lunar glow blue
+                        primaryDark: '#0A73AD',
+                        textMain: '#F8FAFC',
+                        textMuted: '#94A3B8',
+                    },
+                    fontFamily: {
+                        headline: ["Newsreader", "serif"],
+                        body: ["Inter", "sans-serif"],
+                    }
+                }
+            }
         }
     </script>
-<style>
-        body { background-color: #0B0E14; scroll-behavior: smooth; }
-        .glass-card {
-            background: rgba(29, 32, 38, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(168, 232, 255, 0.1);
+    
+    <style>
+        html { scroll-behavior: smooth; background-color: #040711; }
+        body { background-color: transparent; margin: 0; overflow-x: hidden; }
+        .glass-panel {
+            background: rgba(11, 17, 32, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(157, 224, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-        .neon-glow {
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
+        .neon-text {
+            text-shadow: 0 0 20px rgba(157, 224, 255, 0.3);
         }
-        .text-gradient {
-            background: linear-gradient(135deg, #00D4FF 0%, #A8E8FF 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        /* Hide scrollbar */
+        ::-webkit-scrollbar { display: none; }
+        * { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  
-  <!-- 3D & Animation Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+</head>
+<body class="font-body text-textMain antialiased">
+    
+    <!-- Fixed 3D Canvas -->
+    <div id="canvas-container" class="fixed inset-0 -z-50 pointer-events-none"></div>
 
-  </head>
-<body class="font-body text-on-surface">
-<!-- Shared Component: TopAppBar -->
-<nav class="fixed top-0 w-full z-50 bg-[#0B0E14]/60 backdrop-blur-xl flex justify-between items-center px-8 py-6">
-<div class="text-2xl font-serif italic text-white">SUSMITA BAL</div>
-<div class="hidden md:flex gap-12 items-center">
-<a class="font-sans uppercase tracking-[0.2em] text-[10px] text-[#00D4FF] hover:text-[#00D4FF] transition-colors duration-300" href="#about">ABOUT</a>
-<a class="font-sans uppercase tracking-[0.2em] text-[10px] text-white/70 hover:text-[#00D4FF] transition-colors duration-300" href="#experience">EXPERIENCE</a>
-<a class="font-sans uppercase tracking-[0.2em] text-[10px] text-white/70 hover:text-[#00D4FF] transition-colors duration-300" href="#skills">SKILLS</a>
-<a class="px-6 py-2 bg-gradient-to-br from-primary-container to-primary text-on-primary-fixed font-label text-[10px] tracking-widest uppercase rounded-sm hover:scale-95 transition-all duration-200" href="mailto:balsusmita111@gmail.com">HIRE</a>
-</div>
-<button class="md:hidden text-[#00D4FF]">
-<span class="material-symbols-outlined">menu</span>
-</button>
-</nav>
-<main class="pt-24 overflow-x-hidden">
-<!-- Hero Section -->
-<section class="min-h-[751px] flex flex-col justify-center px-8 md:px-20 lg:px-32 relative">
-<div class="max-w-6xl">
-<div class="mb-8 opacity-60">
-<span class="font-label uppercase tracking-[0.3em] text-[10px]">DIGITAL MEDIA JOURNALIST &amp; STRATEGIST</span>
-</div>
-<h1 class="font-headline text-5xl md:text-8xl lg:text-9xl tracking-tight leading-[0.9] text-white mb-12">
-                    Crafting Meaningful <span class="italic text-primary-container">Digital Stories</span> that Drive Results
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center text-textMain">
+        <div class="text-2xl font-headline italic neon-text">SUSMITA BAL</div>
+        <div class="hidden md:flex gap-12 font-body text-xs tracking-[0.2em] uppercase">
+            <a href="#about" class="text-textMuted hover:text-primary transition-colors">About</a>
+            <a href="#experience" class="text-textMuted hover:text-primary transition-colors">Experience</a>
+            <a href="#skills" class="text-textMuted hover:text-primary transition-colors">Skills</a>
+        </div>
+        <a href="mailto:balsusmita111@gmail.com" class="px-6 py-2 bg-primary/10 border border-primary/30 text-primary font-body text-xs tracking-widest uppercase rounded-full hover:bg-primary hover:text-background transition-all shadow-[0_0_15px_rgba(157,224,255,0.2)] hover:shadow-[0_0_25px_rgba(157,224,255,0.5)]">Hold a Chat</a>
+    </nav>
+
+    <!-- Scrollytelling Sections -->
+    <main class="relative w-full">
+        <!-- Hero -->
+        <section id="hero" class="h-[120vh] px-8 md:px-20 lg:px-32 flex flex-col justify-center max-w-7xl mx-auto">
+            <div class="max-w-2xl mt-[-10vh]">
+                <span class="font-body uppercase tracking-[0.3em] text-xs text-primary mb-6 block font-medium">Digital Media Journalist</span>
+                <h1 class="font-headline text-6xl md:text-8xl leading-[0.9] text-textMain mb-8 tracking-tight drop-shadow-lg">
+                    Illuminate your <span class="italic text-primary neon-text">brand's</span> orbit.
                 </h1>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
-<p class="font-body text-lg md:text-xl text-on-surface-variant max-w-md leading-relaxed">
-                        Susmita Bal | Digital Media Journalist | Content Creator | Social Media Strategist
-                    </p>
-<div class="flex flex-col items-end gap-4">
-<div class="w-full h-[1px] bg-outline-variant opacity-20"></div>
-<span class="font-headline italic text-2xl text-secondary">Est. 2020</span>
-</div>
-</div>
-</div>
-<!-- Background Decoration (Replaced with Three.js Canvas Container) -->
-<div id="canvas-container" class="absolute inset-0 -z-10 mix-blend-screen opacity-50"></div>
-</section>
-<!-- Bio Section -->
-<section class="py-32 px-8 md:px-20 lg:px-32 bg-surface-container-low" id="about">
-<div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-20 items-start">
-<div class="w-full md:w-1/3">
-<h2 class="font-headline text-4xl text-white mb-6">The Narrative Vision</h2>
-<div class="w-12 h-[2px] bg-primary-container"></div>
-</div>
-<div class="w-full md:w-2/3">
-<p class="font-body text-xl md:text-2xl text-on-surface leading-relaxed mb-8">
-                        With over 4 years of experience at the intersection of journalism and digital strategy, I specialize in transforming complex data and raw news into compelling multi-platform narratives. 
-                    </p>
-<p class="font-body text-lg text-on-surface-variant leading-relaxed">
-                        My approach combines the ethical rigor of traditional journalism with the dynamic agility of modern digital marketing. From newsrooms to corporate boardrooms, I've consistently driven engagement through strategic content creation and social media management.
-                    </p>
-</div>
-</div>
-</section>
-<!-- Experience Timeline -->
-<section class="py-32 px-8 md:px-20 lg:px-32" id="experience">
-<div class="mb-24">
-<span class="font-label uppercase tracking-[0.3em] text-[10px] text-primary-container">PROFESSIONAL JOURNEY</span>
-<h2 class="font-headline text-5xl text-white mt-4">Experience</h2>
-</div>
-<div class="max-w-4xl space-y-0 relative border-l border-outline-variant/20 ml-4 md:ml-0">
-<!-- Timeline Item 1 -->
-<div class="relative pl-12 pb-20 group">
-<div class="absolute left-[-5px] top-2 w-2 h-2 rounded-full bg-primary-container group-hover:scale-150 transition-transform"></div>
-<div class="flex flex-col md:flex-row md:justify-between items-start gap-2 mb-4">
-<h3 class="font-headline text-2xl text-white">Social Media Executive</h3>
-<span class="font-label uppercase tracking-[0.1em] text-[10px] text-secondary-fixed-dim bg-surface-container px-3 py-1 rounded-sm">Ashwini Hospital</span>
-</div>
-<p class="text-on-surface-variant max-w-2xl">Leading digital transformation and patient engagement through strategic social media communication and reputation management.</p>
-</div>
-<!-- Timeline Item 2 -->
-<div class="relative pl-12 pb-20 group">
-<div class="absolute left-[-5px] top-2 w-2 h-2 rounded-full bg-primary group-hover:scale-150 transition-transform"></div>
-<div class="flex flex-col md:flex-row md:justify-between items-start gap-2 mb-4">
-<h3 class="font-headline text-2xl text-white">Digital Content Creator</h3>
-<span class="font-label uppercase tracking-[0.1em] text-[10px] text-secondary-fixed-dim bg-surface-container px-3 py-1 rounded-sm">News18 India</span>
-</div>
-<p class="text-on-surface-variant max-w-2xl">Crafting high-impact digital stories and breaking news segments for one of India's leading news networks.</p>
-</div>
-<!-- Timeline Item 3 -->
-<div class="relative pl-12 pb-20 group">
-<div class="absolute left-[-5px] top-2 w-2 h-2 rounded-full bg-primary group-hover:scale-150 transition-transform"></div>
-<div class="flex flex-col md:flex-row md:justify-between items-start gap-2 mb-4">
-<h3 class="font-headline text-2xl text-white">Input Desk Coordinator</h3>
-<span class="font-label uppercase tracking-[0.1em] text-[10px] text-secondary-fixed-dim bg-surface-container px-3 py-1 rounded-sm">Naxatra News</span>
-</div>
-<p class="text-on-surface-variant max-w-2xl">Managing news flows, assignment coordination, and ensuring editorial precision in a fast-paced broadcast environment.</p>
-</div>
-<!-- Timeline Item 4 -->
-<div class="relative pl-12 group">
-<div class="absolute left-[-5px] top-2 w-2 h-2 rounded-full bg-primary group-hover:scale-150 transition-transform"></div>
-<div class="flex flex-col md:flex-row md:justify-between items-start gap-2 mb-4">
-<h3 class="font-headline text-2xl text-white">Content Strategist</h3>
-<span class="font-label uppercase tracking-[0.1em] text-[10px] text-secondary-fixed-dim bg-surface-container px-3 py-1 rounded-sm">Sunstar TV</span>
-</div>
-<p class="text-on-surface-variant max-w-2xl">Developed long-term content roadmaps and digital growth strategies for regional broadcast media.</p>
-</div>
-</div>
-</section>
-<!-- Skills Grid -->
-<section class="py-32 px-8 md:px-20 lg:px-32 bg-surface-container-low relative overflow-hidden" id="skills">
-<div class="mb-24 flex flex-col items-center text-center">
-<span class="font-label uppercase tracking-[0.3em] text-[10px] text-primary-container">CAPABILITIES</span>
-<h2 class="font-headline text-5xl text-white mt-4">The Toolset</h2>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-<div class="glass-card p-10 rounded-xl neon-glow transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
-<span class="material-symbols-outlined text-primary-container mb-6 text-4xl">palette</span>
-<h3 class="font-headline text-2xl text-white mb-2">Canva</h3>
-<p class="text-on-surface-variant text-sm">Visual storytelling and graphic asset creation for multi-channel digital campaigns.</p>
-</div>
-<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
-<span class="material-symbols-outlined text-primary-container mb-6 text-4xl">strategy</span>
-<h3 class="font-headline text-2xl text-white mb-2">Content Strategy</h3>
-<p class="text-on-surface-variant text-sm">End-to-end planning from audience persona development to editorial calendars.</p>
-</div>
-<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
-<span class="material-symbols-outlined text-primary-container mb-6 text-4xl">trending_up</span>
-<h3 class="font-headline text-2xl text-white mb-2">Digital Marketing</h3>
-<p class="text-on-surface-variant text-sm">Data-driven marketing tactics focused on engagement, reach, and conversion.</p>
-</div>
-<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
-<span class="material-symbols-outlined text-primary-container mb-6 text-4xl">public</span>
-<h3 class="font-headline text-2xl text-white mb-2">Public Relations</h3>
-<p class="text-on-surface-variant text-sm">Brand voice management and strategic media relations for professional entities.</p>
-</div>
-<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
-<span class="material-symbols-outlined text-primary-container mb-6 text-4xl">assignment</span>
-<h3 class="font-headline text-2xl text-white mb-2">News Input</h3>
-<p class="text-on-surface-variant text-sm">Information gathering, news verification, and editorial assignment management.</p>
-</div>
-<div class="glass-card p-10 rounded-xl transition-all duration-300 hover:bg-surface-container-high group" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
-<span class="material-symbols-outlined text-primary-container mb-6 text-4xl">school</span>
-<h3 class="font-headline text-2xl text-white mb-2">Education</h3>
-<p class="text-on-surface-variant text-sm">Postgrad in Journalism and Mass Communication from Utkal University.</p>
-</div>
-</div>
-</section>
-<!-- Contact/Call to Action -->
-<section class="py-40 px-8 md:px-20 lg:px-32 text-center">
-<h2 class="font-headline text-5xl md:text-7xl text-white mb-16 max-w-4xl mx-auto">
-                Ready to elevate your <span class="italic">digital footprint?</span>
-</h2>
-<div class="flex flex-col md:flex-row justify-center gap-8 items-center">
-<a class="text-lg font-headline text-primary-container hover:text-white transition-colors duration-300 border-b border-primary-container pb-1" href="mailto:balsusmita111@gmail.com">
-                    balsusmita111@gmail.com
-                </a>
-<span class="hidden md:block text-outline-variant">/</span>
-<a class="text-lg font-headline text-white hover:text-primary-container transition-colors duration-300 flex items-center gap-2" href="#">
-                    Connect on LinkedIn <span class="material-symbols-outlined text-sm">north_east</span>
-</a>
-</div>
-</section>
-</main>
-<!-- Shared Component: Footer -->
-<footer class="bg-[#0B0E14] w-full py-20 px-8 border-t border-outline-variant/10">
-<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto gap-8">
-<div class="text-white font-serif italic text-xl">SUSMITA BAL</div>
-<div class="flex gap-12">
-<a class="font-sans uppercase tracking-[0.2em] text-[10px] text-white/40 hover:text-[#00D4FF] transition-all" href="#">LINKEDIN</a>
-<a class="font-sans uppercase tracking-[0.2em] text-[10px] text-white/40 hover:text-[#00D4FF] transition-all" href="#">TWITTER</a>
-<a class="font-sans uppercase tracking-[0.2em] text-[10px] text-white/40 hover:text-[#00D4FF] transition-all" href="#">DRIBBBLE</a>
-</div>
-<div class="font-sans uppercase tracking-[0.2em] text-[10px] text-white/40">
-                © 2024 SUSMITA BAL — ALL RIGHTS RESERVED
+                <p class="font-body text-lg text-textMuted max-w-md leading-relaxed">
+                    A blend of traditional journalism ethics and modern social media strategy, shining a light on meaningful narratives.
+                </p>
             </div>
-</div>
-</div>
-</footer>
+        </section>
 
-<!-- Gemini AI Chat Widget -->
-<div id="ai-chat-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
-    <!-- Chat Window -->
-    <div id="ai-chat-window" class="hidden w-80 md:w-96 glass-card rounded-2xl mb-4 overflow-hidden border border-primary/20 shadow-2xl flex-col transition-all duration-300 origin-bottom-right">
-        <!-- Header -->
-        <div class="bg-surface-container-high p-4 flex justify-between items-center border-b border-primary/10">
-            <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary text-xl">temp_preferences_custom</span>
-                <span class="font-headline text-white">Susmita AI</span>
+        <!-- About -->
+        <section id="about" class="min-h-screen px-8 md:px-20 lg:px-32 flex items-center justify-end max-w-7xl mx-auto">
+            <div class="max-w-xl glass-panel p-12 rounded-3xl gs-reveal">
+                <h2 class="font-headline text-4xl mb-6">The Narrative Vision</h2>
+                <div class="w-12 h-1 bg-primary mb-8 rounded-full shadow-[0_0_10px_rgba(157,224,255,0.5)]"></div>
+                <p class="text-lg leading-relaxed text-textMuted mb-6">
+                    With over 4 years navigating the galaxy of journalism and digital strategy, I specialize in transforming raw data into stellar multi-platform narratives.
+                </p>
+                <p class="text-base leading-relaxed text-textMuted">
+                    From broadcast newsrooms at News18 to driving digital transformations in healthcare, my approach is rooted in engagement, agility, and uncompromising clarity.
+                </p>
             </div>
-            <button id="ai-chat-close" class="text-on-surface-variant hover:text-white transition-colors">
-                <span class="material-symbols-outlined">close</span>
-            </button>
-        </div>
-        <!-- Messages -->
-        <div id="ai-chat-messages" class="h-80 p-4 font-body text-sm space-y-4 overflow-y-auto flex flex-col bg-surface/50">
-            <div class="bg-surface-container p-3 rounded-xl rounded-tl-sm self-start max-w-[85%] text-on-surface">
-                Hi! I'm Susmita's AI assistant. Do you have any questions about her journalism experience, content strategies, or portfolio?
+        </section>
+
+        <!-- Experience -->
+        <section id="experience" class="min-h-[150vh] px-8 md:px-20 lg:px-32 flex items-center max-w-7xl mx-auto py-32">
+            <div class="max-w-md">
+                <span class="font-body uppercase tracking-[0.3em] text-xs text-primary mb-4 block">Professional Journey</span>
+                <h2 class="font-headline text-5xl mb-16">Experience</h2>
+                
+                <div class="space-y-12 border-l border-primary/20 pl-8 relative">
+                    <!-- Item -->
+                    <div class="gs-reveal relative">
+                        <div class="absolute -left-[37.5px] top-2 w-3 h-3 rounded-full bg-primary ring-4 ring-background shadow-[0_0_15px_rgba(157,224,255,1)]"></div>
+                        <h3 class="font-headline text-2xl text-textMain mb-1">Social Media Executive</h3>
+                        <p class="text-xs uppercase tracking-wider text-textMuted mb-3">Ashwini Hospital</p>
+                        <p class="text-sm text-textMuted leading-relaxed">Leading digital transformation and patient engagement through strategic social media communication.</p>
+                    </div>
+                    <!-- Item -->
+                    <div class="gs-reveal relative">
+                        <div class="absolute -left-[37.5px] top-2 w-3 h-3 rounded-full bg-primary/40 ring-4 ring-background shadow-[0_0_15px_rgba(157,224,255,0.3)]"></div>
+                        <h3 class="font-headline text-2xl text-textMain mb-1">Digital Content Creator</h3>
+                        <p class="text-xs uppercase tracking-wider text-textMuted mb-3">News18 India</p>
+                        <p class="text-sm text-textMuted leading-relaxed">Crafting high-impact digital stories and breaking news segments for one of India's leading networks.</p>
+                    </div>
+                    <!-- Item -->
+                    <div class="gs-reveal relative">
+                        <div class="absolute -left-[37.5px] top-2 w-3 h-3 rounded-full bg-primary/40 ring-4 ring-background shadow-[0_0_15px_rgba(157,224,255,0.3)]"></div>
+                        <h3 class="font-headline text-2xl text-textMain mb-1">Input Desk Coordinator</h3>
+                        <p class="text-xs uppercase tracking-wider text-textMuted mb-3">Naxatra News | Sunstar TV</p>
+                        <p class="text-sm text-textMuted leading-relaxed">Managing news flows, assignment coordination, and editorial precision.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Gallery -->
+        <section id="skills" class="min-h-screen px-8 md:px-20 py-32 max-w-7xl mx-auto flex flex-col justify-center">
+            <div class="text-center mb-20 gs-reveal">
+                <h2 class="font-headline text-5xl mb-4">The Toolset</h2>
+                <p class="text-textMuted max-w-md mx-auto">Mastery across platforms and strategies.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Skill cards -->
+                <div class="glass-panel p-8 rounded-2xl text-center gs-reveal hover:-translate-y-2 hover:bg-white/5 hover:border-primary/50 transition-all duration-300">
+                    <span class="material-symbols-outlined text-3xl text-primary mb-4 block drop-shadow-[0_0_8px_rgba(157,224,255,0.8)]">palette</span>
+                    <h3 class="font-headline text-xl mb-2">Canva</h3>
+                    <p class="text-xs text-textMuted">Asset Creation</p>
+                </div>
+                <div class="glass-panel p-8 rounded-2xl text-center gs-reveal hover:-translate-y-2 hover:bg-white/5 hover:border-primary/50 transition-all duration-300">
+                    <span class="material-symbols-outlined text-3xl text-primary mb-4 block drop-shadow-[0_0_8px_rgba(157,224,255,0.8)]">strategy</span>
+                    <h3 class="font-headline text-xl mb-2">Strategy</h3>
+                    <p class="text-xs text-textMuted">Roadmapping</p>
+                </div>
+                <div class="glass-panel p-8 rounded-2xl text-center gs-reveal hover:-translate-y-2 hover:bg-white/5 hover:border-primary/50 transition-all duration-300">
+                    <span class="material-symbols-outlined text-3xl text-primary mb-4 block drop-shadow-[0_0_8px_rgba(157,224,255,0.8)]">public</span>
+                    <h3 class="font-headline text-xl mb-2">PR</h3>
+                    <p class="text-xs text-textMuted">Brand Voice</p>
+                </div>
+                <div class="glass-panel p-8 rounded-2xl text-center gs-reveal hover:-translate-y-2 hover:bg-white/5 hover:border-primary/50 transition-all duration-300">
+                    <span class="material-symbols-outlined text-3xl text-primary mb-4 block drop-shadow-[0_0_8px_rgba(157,224,255,0.8)]">trending_up</span>
+                    <h3 class="font-headline text-xl mb-2">Marketing</h3>
+                    <p class="text-xs text-textMuted">Data Driven</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-20 text-center text-textMuted border-t border-white/5 mt-20 relative z-10 glass-panel">
+            <h2 class="font-headline text-4xl text-textMain mb-8">Ready to collaborate?</h2>
+            <a href="mailto:balsusmita111@gmail.com" class="inline-block border-b border-primary text-primary hover:text-white transition-colors text-lg pb-1 drop-shadow-[0_0_10px_rgba(157,224,255,0.4)]">balsusmita111@gmail.com</a>
+            <div class="mt-16 text-xs uppercase tracking-widest text-textMuted/50">
+                © 2024 Susmita Bal. All Rights Reserved.
+            </div>
+        </footer>
+    </main>
+
+    <!-- AI Chat Widget (Galaxy Vibe) -->
+    <div id="ai-chat-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <div id="ai-chat-window" class="hidden w-[340px] glass-panel rounded-3xl mb-4 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex-col transition-all duration-300 origin-bottom-right">
+            <div class="bg-surface/80 p-5 flex justify-between items-center border-b border-white/5">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary shadow-[0_0_10px_rgba(157,224,255,0.2)]">
+                        <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+                    </div>
+                    <span class="font-headline font-medium text-textMain">Susmita AI</span>
+                </div>
+                <button id="ai-chat-close" class="text-textMuted hover:text-white bg-white/5 w-8 h-8 rounded-full flex items-center justify-center transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
+                </button>
+            </div>
+            <div id="ai-chat-messages" class="h-[300px] p-5 font-body text-[13px] space-y-4 overflow-y-auto flex flex-col bg-background/50">
+                <div class="glass-panel border-white/5 p-4 rounded-2xl rounded-tl-sm self-start max-w-[85%] text-textMain leading-relaxed">
+                    Hi! I'm Susmita's AI assistant. Do you have any questions about her digital strategy experience?
+                </div>
+            </div>
+            <div class="p-4 bg-surface/80 border-t border-white/5 flex gap-2">
+                <input id="ai-chat-input" type="text" placeholder="Ask a question..." class="w-full bg-background rounded-full px-4 py-2 text-textMain text-[13px] outline-none border border-white/10 focus:border-primary/50 transition-colors placeholder:text-textMuted/50" />
+                <button id="ai-chat-send" class="bg-primary/20 hover:bg-primary text-primary hover:text-background border border-primary/30 w-10 h-10 rounded-full transition-all flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(157,224,255,0.2)]">
+                    <span class="material-symbols-outlined text-[18px]">send</span>
+                </button>
             </div>
         </div>
-        <!-- Input -->
-        <div class="p-3 bg-surface-container-high border-t border-primary/10 flex gap-2">
-            <input id="ai-chat-input" type="text" placeholder="Ask a question..." class="w-full bg-surface-container rounded-lg px-3 py-2 text-white text-sm outline-none border border-outline-variant/30 focus:border-primary/50 transition-colors" />
-            <button id="ai-chat-send" class="bg-primary-container text-on-primary-fixed p-2 rounded-lg hover:bg-primary transition-colors flex items-center justify-center">
-                <span class="material-symbols-outlined text-sm">send</span>
-            </button>
-        </div>
+        
+        <button id="ai-chat-toggle" class="w-14 h-14 rounded-full bg-primary text-background shadow-[0_0_30px_rgba(157,224,255,0.6)] hover:scale-105 transition-transform flex items-center justify-center relative group">
+            <span class="material-symbols-outlined text-[24px] group-hover:hidden">auto_awesome</span>
+            <span class="material-symbols-outlined text-[24px] hidden group-hover:block">chat</span>
+        </button>
     </div>
-    
-    <!-- Chat Toggle Button -->
-    <button id="ai-chat-toggle" class="w-14 h-14 rounded-full bg-primary-container text-on-primary-fixed shadow-lg neon-glow hover:scale-105 transition-transform flex items-center justify-center relative group">
-        <span class="material-symbols-outlined text-2xl group-hover:hidden">auto_awesome</span>
-        <span class="material-symbols-outlined text-2xl hidden group-hover:block">chat</span>
-        <span id="ai-chat-badge" class="absolute top-0 right-0 w-3 h-3 bg-error rounded-full border-2 border-[#0B0E14] animate-pulse"></span>
-    </button>
-</div>
 
-<!-- Scripts for 3D Effects & AI Widget -->
-<script>
-// --- 1. Three.js Hero Background ---
-const initThreeJS = () => {
-    const container = document.getElementById('canvas-container');
-    if (!container) return;
+    <!-- 3D & GSAP Logic for Galaxy Theme -->
+    <script>
+    const initThreeJS = () => {
+        const container = document.getElementById('canvas-container');
+        if (!container) return;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    container.appendChild(renderer.domElement);
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x040711, 0.02);
 
-    // Create particle stars
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 700;
-    const posArray = new Float32Array(particlesCount * 3);
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 0, 15);
 
-    for(let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 5;
-    }
+        const renderer = new THREE.WebGLRenderer({ alpha: false, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setClearColor(0x040711, 1);
+        container.appendChild(renderer.domElement);
 
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    const material = new THREE.PointsMaterial({
-        size: 0.005,
-        color: 0x00D4FF,
-        transparent: true,
-        opacity: 0.8,
-        blending: THREE.AdditiveBlending
-    });
+        const centralGroup = new THREE.Group();
+        scene.add(centralGroup);
 
-    const particlesMesh = new THREE.Points(particlesGeometry, material);
-    scene.add(particlesMesh);
-    camera.position.z = 2;
-
-    let mouseX = 0;
-    let mouseY = 0;
-    document.addEventListener('mousemove', (event) => {
-        mouseX = event.clientX / window.innerWidth - 0.5;
-        mouseY = event.clientY / window.innerHeight - 0.5;
-    });
-
-    const animate = () => {
-        requestAnimationFrame(animate);
-        particlesMesh.rotation.y += 0.001;
-        particlesMesh.rotation.x += 0.0005;
+        // --- Moon (Low Poly Stylized) ---
+        const moonGeo = new THREE.IcosahedronGeometry(3.5, 3);
         
-        // Slight interaction with mouse
-        particlesMesh.rotation.y += mouseX * 0.05;
-        particlesMesh.rotation.x += mouseY * 0.05;
-        
-        renderer.render(scene, camera);
-    };
+        // Give it some rocky distortion
+        const positions = moonGeo.attributes.position;
+        for (let i = 0; i < positions.count; i++) {
+            const vertex = new THREE.Vector3();
+            vertex.fromBufferAttribute(positions, i);
+            vertex.normalize().multiplyScalar(3.5 + Math.random() * 0.15); // craters/bumps
+            positions.setXYZ(i, vertex.x, vertex.y, vertex.z);
+        }
+        moonGeo.computeVertexNormals();
 
-    animate();
-
-    // Handle Resize
-    window.addEventListener('resize', () => {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-    });
-};
-
-// --- 2. GSAP ScrollTrigger Entrances ---
-const initGSAP = () => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Sections fade up
-    const sections = ['#about', '#experience', '#skills'];
-    sections.forEach(selector => {
-        gsap.from(selector, {
-            scrollTrigger: {
-                trigger: selector,
-                start: "top 80%",
-                toggleActions: "play none none reverse"
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            ease: "power3.out"
+        const moonMat = new THREE.MeshStandardMaterial({
+            color: 0x94A3B8, // greyish slate
+            roughness: 0.9,
+            metalness: 0.1,
+            flatShading: true
         });
-    });
+        const moon = new THREE.Mesh(moonGeo, moonMat);
+        moon.position.set(4, 1, -5);
+        centralGroup.add(moon);
 
-    // Timeline items staggered animation
-    gsap.from("#experience .group", {
-        scrollTrigger: {
-            trigger: "#experience",
-            start: "top 70%",
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.15,
-        ease: "power2.out"
-    });
-};
-
-// --- 3. AI Chat Widget Logic ---
-const initChatWidget = () => {
-    const toggleBtn = document.getElementById('ai-chat-toggle');
-    const closeBtn = document.getElementById('ai-chat-close');
-    const windowEl = document.getElementById('ai-chat-window');
-    const badge = document.getElementById('ai-chat-badge');
-    const inputEl = document.getElementById('ai-chat-input');
-    const sendBtn = document.getElementById('ai-chat-send');
-    const messagesEl = document.getElementById('ai-chat-messages');
-
-    const toggleChat = () => {
-        windowEl.classList.toggle('hidden');
-        windowEl.classList.toggle('flex');
-        if (badge) badge.style.display = 'none'; // hide notification badge
-    };
-
-    toggleBtn.addEventListener('click', toggleChat);
-    closeBtn.addEventListener('click', toggleChat);
-
-    const appendMessage = (text, isUser = false) => {
-        const div = document.createElement('div');
-        div.className = `p-3 rounded-xl max-w-[85%] text-sm text-on-surface ${
-            isUser ? 'bg-primary-container text-on-primary-fixed rounded-tr-sm self-end' : 'bg-surface-container rounded-tl-sm self-start'
-        }`;
-        div.textContent = text;
-        messagesEl.appendChild(div);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-    };
-
-    const handleSend = async () => {
-        const text = inputEl.value.trim();
-        if(!text) return;
+        // --- Outer Floating Moon Dust Rocks ---
+        const rockGeo = new THREE.DodecahedronGeometry(0.1, 0);
+        const rockMat = new THREE.MeshStandardMaterial({ color: 0x475569, flatShading: true });
         
-        appendMessage(text, true);
-        inputEl.value = '';
+        for(let i=0; i<40; i++) {
+            const rock = new THREE.Mesh(rockGeo, rockMat);
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 5 + Math.random() * 6;
+            rock.position.set(
+                Math.cos(angle) * radius + 4,
+                (Math.random() - 0.5) * 4 + 1,
+                Math.sin(angle) * radius - 5
+            );
+            rock.rotation.set(Math.random(), Math.random(), Math.random());
+            rock.scale.setScalar(Math.random() * 1.5 + 0.5);
+            // Attach subjective speeds
+            rock.userData = {
+                rotSpeed: (Math.random() - 0.5) * 0.05,
+                orbitSpeed: (Math.random() - 0.5) * 0.005 + 0.002
+            };
+            centralGroup.add(rock);
+        }
 
-        // Add typing indicator
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'bg-surface-container p-3 rounded-xl rounded-tl-sm self-start max-w-[85%] text-on-surface-variant text-xs italic';
-        typingDiv.textContent = 'Susmita AI is typing...';
-        messagesEl.appendChild(typingDiv);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
+        // --- Starfield (Galaxy) ---
+        const starGeo = new THREE.BufferGeometry();
+        const starCount = 3000;
+        const starPos = new Float32Array(starCount * 3);
+        const starSizes = new Float32Array(starCount);
+        
+        for(let i=0; i < starCount * 3; i+=3) {
+            // spherical distribution
+            const r = 15 + Math.random() * 40;
+            const theta = 2 * Math.PI * Math.random();
+            const phi = Math.acos(2 * Math.random() - 1);
+            
+            starPos[i] = r * Math.sin(phi) * Math.cos(theta);
+            starPos[i+1] = r * Math.sin(phi) * Math.sin(theta);
+            starPos[i+2] = r * Math.cos(phi);
+            
+            starSizes[i/3] = Math.random() * 1.5;
+        }
+        
+        starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+        starGeo.setAttribute('size', new THREE.BufferAttribute(starSizes, 1));
+        
+        const starMat = new THREE.PointsMaterial({
+            color: 0x9DE0FF,
+            size: 0.1,
+            transparent: true,
+            opacity: 0.8,
+            sizeAttenuation: true
+        });
+        const stars = new THREE.Points(starGeo, starMat);
+        centralGroup.add(stars);
 
-        // Mock AI Response Delay
-        setTimeout(() => {
-            messagesEl.removeChild(typingDiv);
-            
-            // Hardcoded mock response for safety instead of a direct API call
-            const reply = "That's a great question! Susmita brings over 4 years of experience analyzing news flows and crafting narratives that drive engagement. Is there a specific project or skillset you'd like to hear more about?";
-            
-            appendMessage(reply, false);
-        }, 1500);
+        // --- Distant Nebula Glows ---
+        const glowGeo = new THREE.SphereGeometry(15, 32, 32);
+        const glowMat1 = new THREE.MeshBasicMaterial({
+            color: 0x1A4080,
+            transparent: true,
+            opacity: 0.05,
+            side: THREE.BackSide,
+            blending: THREE.AdditiveBlending
+        });
+        const glow1 = new THREE.Mesh(glowGeo, glowMat1);
+        glow1.position.set(-10, 5, -20);
+        centralGroup.add(glow1);
+
+        // --- Lighting ---
+        const ambientLight = new THREE.AmbientLight(0x101524, 2.0); // deep blue ambient
+        scene.add(ambientLight);
+
+        // Strong moonlight hitting the moon from the side
+        const moonLight = new THREE.DirectionalLight(0x9DE0FF, 3.5);
+        moonLight.position.set(10, 5, 2);
+        scene.add(moonLight);
+
+        // Backlight for edge rim
+        const backLight = new THREE.DirectionalLight(0x60A5FA, 1);
+        backLight.position.set(-10, -5, -10);
+        scene.add(backLight);
+
+        // --- Animation Loop ---
+        let targetX = 0;
+        let targetY = 0;
+        const windowHalfX = window.innerWidth / 2;
+        const windowHalfY = window.innerHeight / 2;
+
+        document.addEventListener('mousemove', (event) => {
+            targetX = (event.clientX - windowHalfX) * 0.0005;
+            targetY = (event.clientY - windowHalfY) * 0.0005;
+        });
+
+        const animate = () => {
+            requestAnimationFrame(animate);
+
+            // Moon idle rotation
+            moon.rotation.y += 0.001;
+            moon.rotation.z += 0.0002;
+
+            // Starfield rotation
+            stars.rotation.y -= 0.0002;
+            stars.rotation.x += 0.0001;
+
+            // Rock orbit
+            centralGroup.children.forEach(child => {
+                if(child.userData.orbitSpeed) {
+                    child.rotation.x += child.userData.rotSpeed;
+                    child.rotation.y += child.userData.rotSpeed;
+                }
+            });
+
+            // Smooth mouse parallax
+            camera.position.x += (targetX * 5 - camera.position.x) * 0.02;
+            camera.position.y += (-targetY * 5 - camera.position.y) * 0.02;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        };
+        animate();
+
+        // --- GSAP Camera Scrollytelling ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        const scrollTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "main",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 2 // extremely smooth catching up
+            }
+        });
+
+        // 1. Move to About Section (Pan past the moon)
+        scrollTl.to(centralGroup.position, {
+            x: -8,
+            y: 5,
+            z: 10,
+            ease: "power1.inOut"
+        }, 0)
+        .to(centralGroup.rotation, {
+            y: 0.5,
+            ease: "power1.inOut"
+        }, 0);
+
+        // 2. Move to Experience Section (Dive into the stars)
+        scrollTl.to(centralGroup.position, {
+            x: 2,
+            y: 10,
+            z: 20,
+            ease: "power1.inOut"
+        }, 0.3)
+        .to(centralGroup.rotation, {
+            y: -0.5,
+            x: 0.3,
+            ease: "power1.inOut"
+        }, 0.3);
+
+        // 3. Move to Skills Section (Look up at the moon from below)
+        scrollTl.to(centralGroup.position, {
+            x: -5,
+            y: -5,
+            z: 5,
+            ease: "power1.inOut"
+        }, 0.6)
+        .to(centralGroup.rotation, {
+            x: -0.5,
+            y: -1.0,
+            ease: "power1.inOut"
+        }, 0.6);
+
+        // Window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
     };
 
-    sendBtn.addEventListener('click', handleSend);
-    inputEl.addEventListener('keypress', (e) => {
-        if(e.key === 'Enter') handleSend();
-    });
-};
+    // --- HTML Element Entrances ---
+    const initHTMLAnimations = () => {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        const reveals = document.querySelectorAll(".gs-reveal");
+        reveals.forEach((element) => {
+            gsap.fromTo(element, {
+                y: 60,
+                opacity: 0,
+                scale: 0.95
+            }, {
+                y: 0,
+                opacity: 1,
+                scale: 1,
+                duration: 1.2,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+    };
 
-// Initialize everything on load
-window.addEventListener('DOMContentLoaded', () => {
-    initThreeJS();
-    initGSAP();
-    initChatWidget();
-});
-</script>
-</footer>
-</body></html>
+    // --- AI Chat Logic ---
+    const initChat = () => {
+        const toggleBtn = document.getElementById('ai-chat-toggle');
+        const closeBtn = document.getElementById('ai-chat-close');
+        const windowEl = document.getElementById('ai-chat-window');
+        const messagesEl = document.getElementById('ai-chat-messages');
+        const inputEl = document.getElementById('ai-chat-input');
+        const sendBtn = document.getElementById('ai-chat-send');
+
+        const toggleChat = () => {
+            windowEl.classList.toggle('hidden');
+            windowEl.classList.toggle('flex');
+        };
+
+        toggleBtn.addEventListener('click', toggleChat);
+        closeBtn.addEventListener('click', toggleChat);
+
+        const appendMessage = (text, isUser = false) => {
+            const div = document.createElement('div');
+            div.className = `p-4 rounded-xl max-w-[85%] text-[13px] leading-relaxed border ${
+                isUser ? 'bg-primary/20 text-primary border-primary/30 rounded-tr-sm self-end' : 'glass-panel border-white/5 text-textMain rounded-tl-sm self-start'
+            }`;
+            div.textContent = text;
+            messagesEl.appendChild(div);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        };
+
+        const handleSend = () => {
+            const text = inputEl.value.trim();
+            if(!text) return;
+            
+            appendMessage(text, true);
+            inputEl.value = '';
+
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'glass-panel border-white/5 text-textMuted p-3 rounded-xl rounded-tl-sm self-start max-w-[85%] text-xs italic';
+            typingDiv.textContent = 'Susmita AI is typing...';
+            messagesEl.appendChild(typingDiv);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+
+            setTimeout(() => {
+                messagesEl.removeChild(typingDiv);
+                appendMessage("The night sky is vast, much like the possibilities in digital media. If you're looking for stellar engagement strategies, I can help you chart the course!", false);
+            }, 1200);
+        };
+
+        sendBtn.addEventListener('click', handleSend);
+        inputEl.addEventListener('keypress', e => e.key === 'Enter' && handleSend());
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+        initThreeJS();
+        initHTMLAnimations();
+        initChat();
+    });
+    </script>
+</body>
+</html>
