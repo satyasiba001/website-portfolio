@@ -1,0 +1,36 @@
+Interview Questions (Project-Based)
+AWS RDS
+What is Amazon RDS?
+Difference between RDS and MySQL installed on EC2?
+What is an RDS endpoint?
+What is a DB subnet group?
+What is a parameter group?
+What is a security group in RDS?
+Difference between automated backup and snapshot?
+What is Point-in-Time Recovery?
+What is Multi-AZ?
+What is a Read Replica?
+MySQL
+Difference between SELECT, INSERT, UPDATE, and DELETE privileges?
+What is the Principle of Least Privilege?
+Why should applications not use admin users?
+What is the purpose of FLUSH PRIVILEGES?
+What does 'user'@'%' mean?
+Docker
+What is a Docker image?
+What is a Docker container?
+Difference between docker build and docker run?
+How do environment variables work in Docker?
+How would you update the application without downtime?
+Troubleshooting
+EC2 cannot connect to RDS. What would you check?
+Why did nc -zv <rds-endpoint> 3306 timeout?
+How do Security Groups affect connectivity?
+What is the difference between inbound and outbound rules?
+How would you troubleshoot a failed database connection from an application?
+Scenario-Based
+A developer accidentally drops a table. How do you recover?
+RDS CPU utilization is 95%. What do you check?
+Database connections keep increasing. What metric would you monitor?
+How would you securely store database credentials?
+How would you deploy this application using ECR and GitHub Actions?
